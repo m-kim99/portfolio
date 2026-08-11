@@ -84,7 +84,7 @@ export default function Personal() {
               width={SHOT_W}
               height={SHOT_H}
               priority={false}
-              sizes="(min-width: 768px) 700px, 100vw"
+              sizes="(min-width: 768px) 824px, 100vw"
               className="w-full h-auto rounded-lg border border-zinc-200 dark:border-zinc-800"
             />
             <figcaption className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
@@ -129,7 +129,7 @@ export default function Personal() {
                   width={SHOT_W}
                   height={SHOT_H}
                   loading="lazy"
-                  sizes="(min-width: 640px) 340px, 100vw"
+                  sizes="(min-width: 640px) 404px, 100vw"
                   className="w-full h-auto rounded-lg border border-zinc-200 dark:border-zinc-800"
                 />
                 <figcaption className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
