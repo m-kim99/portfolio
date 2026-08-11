@@ -1,10 +1,16 @@
 "use client";
 
 import { Fragment, type ReactNode } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 
 type Stat = { value: string; label: string };
+type Shot = { src: string; caption: string };
+
+/** 스샷 원본 비율 1600x1013 — next/image에 넘길 고정 크기 */
+const SHOT_W = 1600;
+const SHOT_H = 1013;
 
 /** `**강조**` 구간만 굵게 렌더링 — 하이라이트 앞부분 라벨용 */
 function renderEmphasis(text: string): ReactNode[] {
@@ -25,6 +31,8 @@ export default function Personal() {
   const stats = t.raw("stats") as Stat[];
   const highlights = t.raw("highlights") as string[];
   const tech = t.raw("tech") as string[];
+  const gallery = t.raw("gallery") as Shot[];
+  const [hero, ...rest] = gallery;
 
   return (
     <section id="personal" className="section">
@@ -68,6 +76,22 @@ export default function Personal() {
             {t("summary")}
           </p>
 
+          {/* 히어로 1장 — 첫 스크롤에서 이 프로젝트가 무엇인지 즉시 전달 */}
+          <figure className="mt-7">
+            <Image
+              src={`/desktoppet/${hero.src}.webp`}
+              alt={hero.caption}
+              width={SHOT_W}
+              height={SHOT_H}
+              priority={false}
+              sizes="(min-width: 768px) 700px, 100vw"
+              className="w-full h-auto rounded-lg border border-zinc-200 dark:border-zinc-800"
+            />
+            <figcaption className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              {hero.caption}
+            </figcaption>
+          </figure>
+
           {/* 스크린샷이 없어도 무게가 실리도록 수치를 앞세운다 */}
           <dl className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 py-6 border-y border-zinc-200 dark:border-zinc-800">
             {stats.map((stat) => (
@@ -94,6 +118,28 @@ export default function Personal() {
               </li>
             ))}
           </ul>
+
+          {/* 나머지 스샷 — 월드의 범위(규모·실내·수중·상공·탈것)를 보여준다 */}
+          <div className="mt-8 grid sm:grid-cols-2 gap-x-4 gap-y-5">
+            {rest.map((shot) => (
+              <figure key={shot.src}>
+                <Image
+                  src={`/desktoppet/${shot.src}.webp`}
+                  alt={shot.caption}
+                  width={SHOT_W}
+                  height={SHOT_H}
+                  loading="lazy"
+                  sizes="(min-width: 640px) 340px, 100vw"
+                  className="w-full h-auto rounded-lg border border-zinc-200 dark:border-zinc-800"
+                />
+                <figcaption className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  {shot.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <p className="mt-5 text-xs text-zinc-500 dark:text-zinc-400">{t("galleryNote")}</p>
 
           <div className="mt-7 flex flex-wrap gap-1.5">
             {tech.map((item) => (

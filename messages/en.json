@@ -175,6 +175,33 @@
       "Playwright",
       "Node.js"
     ],
-    "note": "The repository is currently private. Happy to share code and screenshots on request."
+    "note": "The repository is currently private. Happy to share code and screenshots on request.",
+    "gallery": [
+      {
+        "src": "plaza",
+        "caption": "The plaza — fountain, vendor booths, fruit trees. Props are merged per material instance down to a few meshes per group"
+      },
+      {
+        "src": "archipelago",
+        "caption": "The archipelago — islands are generated from a deterministic seed and streamed in and out by view distance"
+      },
+      {
+        "src": "house",
+        "caption": "House interior — loft and stairs, lit by real cast shadows rather than a render trick"
+      },
+      {
+        "src": "submarine",
+        "caption": "Submarine — underwater foraging. Fish species share an atlas texture: one draw call each"
+      },
+      {
+        "src": "biplane",
+        "caption": "Biplane — the sky refreshes every 30s while the sun and moon travel their arc"
+      },
+      {
+        "src": "drive",
+        "caption": "Night drive — vehicles move at 3× walking speed; tree colour varies by season"
+      }
+    ],
+    "galleryNote": "A few frames from the running app."
   }
 }
