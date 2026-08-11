@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
+/* ============================================================
+   컬러 시스템 — 뉴트럴(zinc) + 단일 액센트
+   그라데이션·글래스모피즘·blur 배경은 사용하지 않는다.
+   ============================================================ */
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --surface: #fafafa;
+  --foreground: #18181b;
+  --muted: #52525b;
+  --subtle: #71717a;
+  --border: #e4e4e7;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #09090b;
+    --surface: #111113;
+    --foreground: #fafafa;
+    --muted: #a1a1aa;
+    --subtle: #71717a;
+    --border: #27272a;
+    --accent: #60a5fa;
+    --accent-hover: #93c5fd;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 섹션 공통 */
+.section {
+  padding: 6rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 7rem 1.5rem;
+  }
+}
+
+.section-alt {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 카드 — 그림자 대신 보더 중심 */
+.card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--subtle);
+}
+
+/* 액센트 */
+.text-accent {
+  color: var(--accent);
+}
+
+.rule {
+  width: 2rem;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+/* 숫자 강조 */
+.stat-value {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }

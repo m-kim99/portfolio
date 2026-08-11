@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Min Kim",
+    "role": "Full-stack Developer",
+    "tagline": "Hired as a product planner, became the company's first engineer",
+    "description": "Designed, built and shipped a B2B SaaS across web, iOS and Android as the sole developer in an organization with no engineering team. Worked on payments, auth, security and NFC in production, and took over stalled outsourced apps to bring them in-house.",
+    "contact": "Get in touch",
+    "viewProjects": "View projects"
+  },
+  "stats": {
+    "title": "By the numbers",
+    "items": [
+      { "value": "55,000", "unit": "LOC", "label": "Frontend codebase" },
+      { "value": "28", "unit": "", "label": "Serverless functions" },
+      { "value": "118", "unit": "", "label": "Row-level security policies" },
+      { "value": "4", "unit": "", "label": "Native apps taken over" }
+    ]
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "From planning to engineering",
+    "description1": "I joined as a product planner, but with no engineers on staff my specs never got built. Building them myself turned out to be faster, so I did — and after shipping the product I moved into an engineering role.",
+    "description2": "I now own the entire web service and the native apps. Subscription billing, multi-tenant security, native NFC integration and LLM-based document search were all built and debugged in a production environment with real paying customers.",
+    "description3": "There was no engineering process in place, so I introduced one as needed — version control, database migrations, architecture documentation and security audits.",
+    "timelineTitle": "Process I introduced",
+    "timeline": [
+      { "when": "2026.04", "what": "Version control (Git)", "why": "No way to roll changes back" },
+      { "when": "2026.05", "what": "Database migrations", "why": "Manual schema edits caused an incident" },
+      { "when": "2026.06", "what": "Architecture & debugging docs", "why": "Hard to reason about my own older code" },
+      { "when": "2026.07", "what": "Full security audit", "why": "First paying customers" }
+    ]
+  },
+  "skills": {
+    "title": "Tech stack",
+    "subtitle": "Only what I have actually shipped and operated",
+    "groups": {
+      "frontend": "Frontend",
+      "backend": "Backend & Data",
+      "mobile": "Native mobile",
+      "domain": "Domain & Ops"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Greenfield build · legacy takeover · rescue",
+    "items": [
+      {
+        "title": "TrayStorage Connect",
+        "kind": "Greenfield (0→1)",
+        "period": "Dec 2025 – present",
+        "summary": "A B2B document management SaaS paired with NFC-tagged physical storage trays. I handled architecture, development, deployment and operations end to end.",
+        "highlights": [
+          "Built subscription billing and migrated payment providers twice with no downtime for existing subscribers",
+          "Enforced multi-tenant isolation at the database level (118 row-level security policies)",
+          "Ran a self-directed security audit that surfaced object-storage credentials exposed in the frontend bundle",
+          "Natural-language document search on 18 LLM function-calling tools, migrated away from vector RAG",
+          "Five-language localization including full legal documents with scheduled revisions"
+        ]
+      },
+      {
+        "title": "Four native apps taken over and rebuilt",
+        "kind": "Brownfield takeover",
+        "period": "Jan 2026 – May 2026",
+        "summary": "Took over apps that had been outsourced and then left unmaintained for roughly 22 months. They were listed on the stores, but social sign-up was broken and most features were unimplemented.",
+        "highlights": [
+          "Rebuilt four independent apps with separate bundle IDs (2 iOS, 2 Android)",
+          "Fixed Kakao, Naver and Google SDK integrations — sign-up was impossible before",
+          "Completed Android first, then brought iOS to parity against it",
+          "Analysed the codebase with no documentation and no original developer available, then weighed patching against a rewrite",
+          "Migrated the backend to Supabase and implemented OCR and AI chat functions"
+        ]
+      },
+      {
+        "title": "Native wrapper rebuilt from scratch",
+        "kind": "Rescue",
+        "period": "May 2026 – present",
+        "summary": "An outsourced native wrapper stalled because NFC was never implemented, and the source code was never handed over. I rebuilt it from requirements alone, with nothing to reference.",
+        "highlights": [
+          "NFC is structurally impossible through a web view alone — it requires a hand-written native bridge",
+          "Wrote four custom Capacitor plugins (NFC, push, speech-to-text, downloads)",
+          "Three-tier NFC intent filter so no tag type fails to register",
+          "Universal links and app links, plus App Store review guideline compliance",
+          "All code now owned in-house, removing the dependency on the vendor"
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Open to new opportunities and collaboration. Happy to send a full CV and detailed portfolio by email.",
+    "email": "min.kim9914@gmail.com",
+    "emailLabel": "Send an email",
+    "githubLabel": "GitHub profile"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}
