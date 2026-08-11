@@ -3,6 +3,7 @@
     "about": "About",
     "skills": "Skills",
     "projects": "Projects",
+    "personal": "Personal",
     "contact": "Contact"
   },
   "hero": {
@@ -16,10 +17,26 @@
   "stats": {
     "title": "By the numbers",
     "items": [
-      { "value": "55,000", "unit": "LOC", "label": "Frontend codebase" },
-      { "value": "28", "unit": "", "label": "Serverless functions" },
-      { "value": "118", "unit": "", "label": "Row-level security policies" },
-      { "value": "4", "unit": "", "label": "Native apps taken over" }
+      {
+        "value": "55,000",
+        "unit": "LOC",
+        "label": "Frontend codebase"
+      },
+      {
+        "value": "28",
+        "unit": "",
+        "label": "Serverless functions"
+      },
+      {
+        "value": "118",
+        "unit": "",
+        "label": "Row-level security policies"
+      },
+      {
+        "value": "4",
+        "unit": "",
+        "label": "Native apps taken over"
+      }
     ]
   },
   "about": {
@@ -30,10 +47,26 @@
     "description3": "There was no engineering process in place, so I introduced one as needed — version control, database migrations, architecture documentation and security audits.",
     "timelineTitle": "Process I introduced",
     "timeline": [
-      { "when": "2026.04", "what": "Version control (Git)", "why": "No way to roll changes back" },
-      { "when": "2026.05", "what": "Database migrations", "why": "Manual schema edits caused an incident" },
-      { "when": "2026.06", "what": "Architecture & debugging docs", "why": "Hard to reason about my own older code" },
-      { "when": "2026.07", "what": "Full security audit", "why": "First paying customers" }
+      {
+        "when": "2026.04",
+        "what": "Version control (Git)",
+        "why": "No way to roll changes back"
+      },
+      {
+        "when": "2026.05",
+        "what": "Database migrations",
+        "why": "Manual schema edits caused an incident"
+      },
+      {
+        "when": "2026.06",
+        "what": "Architecture & debugging docs",
+        "why": "Hard to reason about my own older code"
+      },
+      {
+        "when": "2026.07",
+        "what": "Full security audit",
+        "why": "First paying customers"
+      }
     ]
   },
   "skills": {
@@ -100,5 +133,48 @@
   },
   "footer": {
     "rights": "All rights reserved."
+  },
+  "personal": {
+    "title": "Personal project",
+    "subtitle": "Built outside work hours — real-time 3D and performance engineering",
+    "label": "Personal project · open-source fork",
+    "period": "Jun 2026 – present",
+    "name": "Desktop Pet World",
+    "tagline": "A real-time 3D world that runs on the desktop all day",
+    "summary": "A fork of the open-source desktop-pet app super-agent-party, with an entirely new 3D world layered on top. The render pipeline was redesigned around Apple Silicon thermals as a hard ceiling, and I built my own performance, regression and balance harnesses.",
+    "stats": [
+      {
+        "value": "432",
+        "label": "commits · 61 days, sole author"
+      },
+      {
+        "value": "28,687",
+        "label": "lines of new world engine"
+      },
+      {
+        "value": "74,411",
+        "label": "lines of upstream features cut"
+      },
+      {
+        "value": "≤ 250",
+        "label": "draw-call budget, enforced by tests"
+      }
+    ],
+    "highlights": [
+      "**Render pipeline redesigned under a thermal budget** — removed a post-processing chain (GTAO, bloom) that was stacking ~19 fullscreen passes per frame, replaced with a single forward pass plus MSAA. Idle-aware frame tiering at 60/30/15fps, all particles moved to shader Points, ocean waves moved to a vertex shader",
+      "**Three self-built verification harnesses** — a headless smoke test (including a draw-call ceiling assertion), an fps/CPU probe across idle states, and a Monte Carlo balance simulator that mirrors the pet decision logic over 400 virtual days",
+      "**Away-day simulation** — days you never connect are simulated from a date seed, written up as a diary entry from the pet's point of view, and folded into the world log. The pets bring it up next time you open the app",
+      "**Storage layer hardened after a real incident** — following data loss, the write path was rebuilt around atomic replace, generational backups, corruption quarantine and a three-step recovery ladder",
+      "**3D modelling** — both characters modelled in Blender; procedural textures and vertex-colour gradients mean no texture assets ship at all"
+    ],
+    "tech": [
+      "three.js",
+      "Electron",
+      "Python",
+      "Blender",
+      "Playwright",
+      "Node.js"
+    ],
+    "note": "The repository is currently private. Happy to share code and screenshots on request."
   }
 }

@@ -21,8 +21,9 @@ export default function Header() {
 
   const navItems = [
     { name: t("about"), href: "#about" },
-    { name: t("skills"), href: "#skills" },
     { name: t("projects"), href: "#projects" },
+    { name: t("personal"), href: "#personal" },
+    { name: t("skills"), href: "#skills" },
     { name: t("contact"), href: "#contact" },
   ];
 
