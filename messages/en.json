@@ -18,14 +18,14 @@
     "title": "By the numbers",
     "items": [
       {
-        "value": "55,000",
-        "unit": "LOC",
-        "label": "Frontend codebase"
+        "value": "785",
+        "unit": "",
+        "label": "commits · Nov 2025 – present"
       },
       {
-        "value": "28",
-        "unit": "",
-        "label": "Serverless functions"
+        "value": "55,414",
+        "unit": "LOC",
+        "label": "Frontend codebase"
       },
       {
         "value": "118",
@@ -47,6 +47,11 @@
     "description3": "There was no engineering process in place, so I introduced one as needed — version control, database migrations, architecture documentation and security audits.",
     "timelineTitle": "Process I introduced",
     "timeline": [
+      {
+        "when": "2025.11",
+        "what": "Started building",
+        "why": "No engineer to implement the specs I wrote"
+      },
       {
         "when": "2026.04",
         "what": "Version control (Git)",
@@ -86,7 +91,7 @@
       {
         "title": "TrayStorage Connect",
         "kind": "Greenfield (0→1)",
-        "period": "Dec 2025 – present",
+        "period": "Nov 2025 – present",
         "summary": "A B2B document management SaaS paired with NFC-tagged physical storage trays. I handled architecture, development, deployment and operations end to end.",
         "highlights": [
           "Built subscription billing and migrated payment providers twice with no downtime for existing subscribers",
@@ -99,14 +104,15 @@
       {
         "title": "Four native apps taken over and rebuilt",
         "kind": "Brownfield takeover",
-        "period": "Jan 2026 – May 2026",
-        "summary": "Took over apps that had been outsourced and then left unmaintained for roughly 22 months. They were listed on the stores, but social sign-up was broken and most features were unimplemented.",
+        "period": "Jan 2026 – Jul 2026",
+        "summary": "Took over four apps that had been outsourced and then left unmaintained for roughly 22 months. They were listed on the stores, but the product's core NFC flow was entirely broken and Naver sign-in was impossible because the external API it called had been retired.",
         "highlights": [
-          "Rebuilt four independent apps with separate bundle IDs (2 iOS, 2 Android)",
-          "Fixed Kakao, Naver and Google SDK integrations — sign-up was impossible before",
-          "Completed Android first, then brought iOS to parity against it",
-          "Analysed the codebase with no documentation and no original developer available, then weighed patching against a rewrite",
-          "Migrated the backend to Supabase and implemented OCR and AI chat functions"
+          "Secured all four takeover baselines — the pre-takeover code can be checked out and built to reproduce the original state",
+          "Restored the NFC flow — traced three independent causes (zero intent filters in the manifest, a dependency on the discontinued Firebase Dynamic Links, and NDEF records in the wrong order) and moved to locally assembled deep links",
+          "Fixed Naver sign-in — replaced the retired XML endpoint with the current JSON API and surfaced silent failures through a callback",
+          "Cut iOS LSApplicationQueriesSchemes from 66 to 49 — past Apple's 50-entry limit, canOpenURL always returned false for Chrome and Google Maps",
+          "Modernised a 2022 toolchain — Alamofire 4→5, Firebase 8→10, Kingfisher 5→7, Facebook SDK removed, deployment target 15",
+          "Cleared a Google Play rejection by removing the READ_MEDIA_IMAGES permission entirely rather than rewording it, switching to the system photo picker (84 lines less code)"
         ]
       },
       {
