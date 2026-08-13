@@ -11,7 +11,13 @@ const projectMeta = [
   },
   {
     tech: ["Swift", "Objective-C", "Java", "Android SDK", "Supabase", "Kakao / Naver SDK"],
-    links: [],
+    // 인수·재개발한 4종 전부 스토어 게시 중 (iOS 최종 2026-05, 본인 작업분 반영)
+    links: [
+      { label: "App Store (KR)", href: "https://apps.apple.com/kr/app/traystorage-view/id1608315959" },
+      { label: "App Store (EN)", href: "https://apps.apple.com/us/app/traystorage-view-en/id6474948759" },
+      { label: "Google Play (KR)", href: "https://play.google.com/store/apps/details?id=com.kyad.traystorage" },
+      { label: "Google Play (EN)", href: "https://play.google.com/store/apps/details?id=com.us.traystorage" },
+    ],
   },
   {
     tech: ["Capacitor", "Swift", "Java", "Core NFC", "FCM"],
@@ -26,6 +32,7 @@ type ProjectContent = {
   summary: string;
   highlights: string[];
   details?: string[];
+  storeNote?: string;
 };
 
 export default function Projects() {
@@ -109,8 +116,12 @@ export default function Projects() {
                   ))}
                 </div>
 
+                {project.storeNote && (
+                  <p className="mb-3 text-xs text-zinc-500 dark:text-zinc-400">{project.storeNote}</p>
+                )}
+
                 {meta.links.length > 0 && (
-                  <div className="flex flex-wrap gap-5 pt-1">
+                  <div className="flex flex-wrap gap-x-5 gap-y-2 pt-1">
                     {meta.links.map((link) => (
                       <a
                         key={link.href}

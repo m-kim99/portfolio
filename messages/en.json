@@ -123,7 +123,8 @@
           "Fixed defects including a non-static inner class Gson could not deserialise (registering a popup notice broke the main screen for every user), five error codes that disagreed with the server, and three null-pointer crashes on social sign-up profiles.",
           "Removed a first-launch gate that demanded five permissions including location with no explanation and blocked entry if declined. Permissions are now requested from onboarding after stating their purpose — the app never called a location API anywhere.",
           "Inherited a structure where Korean and English shipped as duplicated projects. Measured duplication at 94.7% on Android and 83% on iOS: consolidatable via product flavors and Xcode targets, but deferred because all four apps were already listed and changing applicationId risks the update path."
-        ]
+        ],
+        "storeNote": "All four are live — every listing runs a build containing my work (iOS last updated May 2026)"
       },
       {
         "title": "Native wrapper rebuilt from scratch",
