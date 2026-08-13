@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import Disclosure from "./Disclosure";
 
 const projectMeta = [
   {
@@ -24,6 +25,7 @@ type ProjectContent = {
   period: string;
   summary: string;
   highlights: string[];
+  details?: string[];
 };
 
 export default function Projects() {
@@ -76,7 +78,7 @@ export default function Projects() {
                   {project.summary}
                 </p>
 
-                <ul className="space-y-2.5 mb-7">
+                <ul className="space-y-2.5">
                   {project.highlights.map((highlight) => (
                     <li
                       key={highlight}
@@ -87,6 +89,14 @@ export default function Projects() {
                     </li>
                   ))}
                 </ul>
+
+                <div className="mb-7">
+                  <Disclosure
+                    items={project.details ?? []}
+                    moreLabel={t("more")}
+                    lessLabel={t("less")}
+                  />
+                </div>
 
                 <div className="flex flex-wrap gap-1.5 mb-5">
                   {meta.tech.map((techItem) => (

@@ -4,6 +4,7 @@ import { Fragment, type ReactNode } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import Disclosure from "./Disclosure";
 
 type Stat = { value: string; label: string };
 type Shot = { src: string; caption: string };
@@ -28,8 +29,10 @@ function renderEmphasis(text: string): ReactNode[] {
 
 export default function Personal() {
   const t = useTranslations("personal");
+  const tp = useTranslations("projects");
   const stats = t.raw("stats") as Stat[];
   const highlights = t.raw("highlights") as string[];
+  const details = (t.raw("details") ?? []) as string[];
   const tech = t.raw("tech") as string[];
   const gallery = t.raw("gallery") as Shot[];
   const [hero, ...rest] = gallery;
@@ -118,6 +121,12 @@ export default function Personal() {
               </li>
             ))}
           </ul>
+
+          <Disclosure
+            items={details.map((d) => renderEmphasis(d))}
+            moreLabel={tp("more")}
+            lessLabel={tp("less")}
+          />
 
           {/* 나머지 스샷 — 월드의 범위(규모·실내·수중·상공·탈것)를 보여준다 */}
           <div className="mt-8 grid sm:grid-cols-2 gap-x-4 gap-y-5">

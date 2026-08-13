@@ -96,9 +96,14 @@
         "highlights": [
           "Built subscription billing and migrated payment providers twice with no downtime for existing subscribers",
           "Enforced multi-tenant isolation at the database level (118 row-level security policies)",
-          "Ran a self-directed security audit that surfaced object-storage credentials exposed in the frontend bundle",
-          "Natural-language document search on 18 LLM function-calling tools, migrated away from vector RAG",
-          "Five-language localization including full legal documents with scheduled revisions"
+          "Natural-language document search on 18 LLM function-calling tools, migrated away from vector RAG"
+        ],
+        "details": [
+          "A self-directed security audit surfaced object-storage credentials in the frontend bundle; I moved uploads and downloads onto server-issued presigned URLs. A second pass showed the code fix was neutralised by a manual key rotation that had never happened — I verified that empirically rather than trusting the checklist.",
+          "Pricing constants had to be duplicated across the browser and Deno edge runtimes, so I locked them together with a contract test that parses the edge sources and compares them against the client constant. If the values drift, the test fails.",
+          "Subscription expiry was enforced in the UI but not in four data-layer functions, so expired subscriptions still passed quota checks. I reproduced each existing definition and added exactly one line to each.",
+          "Five-language localization, including the full terms of service and privacy policy, with revisions that switch over automatically on their effective date.",
+          "Seven classes of personal data (national ID, driver's licence, passport, card, two phone formats, email) are detected by regex in OCR output and masked on the source image."
         ]
       },
       {
@@ -108,11 +113,16 @@
         "summary": "Took over four apps that had been outsourced and then left unmaintained for roughly 22 months. They were listed on the stores, but the product's core NFC flow was entirely broken and Naver sign-in was impossible because the external API it called had been retired.",
         "highlights": [
           "Secured all four takeover baselines — the pre-takeover code can be checked out and built to reproduce the original state",
-          "Restored the NFC flow — traced three independent causes (zero intent filters in the manifest, a dependency on the discontinued Firebase Dynamic Links, and NDEF records in the wrong order) and moved to locally assembled deep links",
-          "Fixed Naver sign-in — replaced the retired XML endpoint with the current JSON API and surfaced silent failures through a callback",
-          "Cut iOS LSApplicationQueriesSchemes from 66 to 49 — past Apple's 50-entry limit, canOpenURL always returned false for Chrome and Google Maps",
-          "Modernised a 2022 toolchain — Alamofire 4→5, Firebase 8→10, Kingfisher 5→7, Facebook SDK removed, deployment target 15",
-          "Cleared a Google Play rejection by removing the READ_MEDIA_IMAGES permission entirely rather than rewording it, switching to the system photo picker (84 lines less code)"
+          "Restored the NFC flow — three independent causes (zero intent filters, a dependency on the discontinued Firebase Dynamic Links, NDEF records in the wrong order) traced and replaced with locally assembled deep links",
+          "Fixed Naver sign-in — replaced the retired XML endpoint with the current JSON API and surfaced silent failures through a callback"
+        ],
+        "details": [
+          "Cut iOS LSApplicationQueriesSchemes from 66 entries to 49. Apple only honours the first 50, and Chrome and Google Maps sat at positions 65 and 66 — canOpenURL had been returning false for them the whole time, with no visible symptom.",
+          "Modernised a 2022 toolchain: Alamofire 4→5, Firebase 8→10, Kingfisher 5→7, GoogleSignIn 6→7, Kakao SDK v2, Facebook SDK removed, deployment target 15. Major-version upgrades broke the call sites, which I rewrote.",
+          "Cleared a Google Play rejection by removing the READ_MEDIA_IMAGES permission entirely rather than rewording its rationale, switching to the system photo picker — 84 lines less code.",
+          "Fixed defects including a non-static inner class Gson could not deserialise (registering a popup notice broke the main screen for every user), five error codes that disagreed with the server, and three null-pointer crashes on social sign-up profiles.",
+          "Removed a first-launch gate that demanded five permissions including location with no explanation and blocked entry if declined. Permissions are now requested from onboarding after stating their purpose — the app never called a location API anywhere.",
+          "Inherited a structure where Korean and English shipped as duplicated projects. Measured duplication at 94.7% on Android and 83% on iOS: consolidatable via product flavors and Xcode targets, but deferred because all four apps were already listed and changing applicationId risks the update path."
         ]
       },
       {
@@ -123,12 +133,17 @@
         "highlights": [
           "NFC is structurally impossible through a web view alone — it requires a hand-written native bridge",
           "Wrote four custom Capacitor plugins (NFC, push, speech-to-text, downloads)",
-          "Three-tier NFC intent filter so no tag type fails to register",
-          "Universal links and app links, plus App Store review guideline compliance",
           "All code now owned in-house, removing the dependency on the vendor"
+        ],
+        "details": [
+          "On iOS, Core NFC is a native-only API unreachable from WKWebView; on Android, Web NFC is disabled by default inside a WebView. Wrapping the web app was never going to be enough on its own.",
+          "Tag detection runs through a three-tier intent filter: tags carrying the service URL (NDEF_DISCOVERED), NDEF-formatted tags (TECH_DISCOVERED), and a catch-all for unformatted tags (TAG_DISCOVERED).",
+          "Configured universal links and app links, and complied with App Store guideline 3.1.1 by hiding payment UI in iOS builds — the replacement copy also avoids naming an external storefront, which 3.1.3 prohibits."
         ]
       }
-    ]
+    ],
+    "more": "More",
+    "less": "Less"
   },
   "contact": {
     "title": "Contact",
@@ -167,11 +182,9 @@
       }
     ],
     "highlights": [
-      "**Render pipeline redesigned under a thermal budget** — removed a post-processing chain (GTAO, bloom) that was stacking ~19 fullscreen passes per frame, replaced with a single forward pass plus MSAA. Idle-aware frame tiering at 60/30/15fps, all particles moved to shader Points, ocean waves moved to a vertex shader",
-      "**Three self-built verification harnesses** — a headless smoke test (including a draw-call ceiling assertion), an fps/CPU probe across idle states, and a Monte Carlo balance simulator that mirrors the pet decision logic over 400 virtual days",
-      "**Away-day simulation** — days you never connect are simulated from a date seed, written up as a diary entry from the pet's point of view, and folded into the world log. The pets bring it up next time you open the app",
-      "**Storage layer hardened after a real incident** — following data loss, the write path was rebuilt around atomic replace, generational backups, corruption quarantine and a three-step recovery ladder",
-      "**3D modelling** — both characters modelled in Blender; procedural textures and vertex-colour gradients mean no texture assets ship at all"
+      "**Render pipeline redesigned under a thermal budget** — removed a post-processing chain (GTAO, bloom) stacking ~19 fullscreen passes per frame, replaced with a single forward pass plus MSAA. Idle-aware frame tiering at 60/30/15fps",
+      "**Three self-built verification harnesses** — a headless smoke test with a draw-call ceiling assertion, an fps/CPU probe across idle states, and a Monte Carlo balance simulator running 400 virtual days",
+      "**Away-day simulation** — days you never connect are simulated from a date seed and written up as a diary entry from the pet's point of view, then folded into the world log"
     ],
     "tech": [
       "three.js",
@@ -208,6 +221,11 @@
         "caption": "Night drive — vehicles move at 3× walking speed; tree colour varies by season"
       }
     ],
-    "galleryNote": "A few frames from the running app."
+    "galleryNote": "A few frames from the running app.",
+    "details": [
+      "**Storage layer hardened after a real incident** — following data loss, the write path was rebuilt around atomic replace (tmp + fsync + rename), generational backups, corruption quarantine and a three-step recovery ladder.",
+      "**3D modelling** — both characters modelled in Blender; procedural textures and vertex-colour gradients mean no texture assets ship at all.",
+      "**74,411 lines of upstream features cut** — removed across five deliberate commits after the fork, with a safety tag beforehand and the keep/remove boundary recorded with reasons."
+    ]
   }
 }
