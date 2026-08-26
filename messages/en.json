@@ -25,7 +25,7 @@
       {
         "value": "55,414",
         "unit": "LOC",
-        "label": "Frontend codebase"
+        "label": "Codebase"
       },
       {
         "value": "118",
@@ -162,8 +162,8 @@
     "label": "Personal project · open-source fork",
     "period": "Jun 2026 – present",
     "name": "Desktop Pet World",
-    "tagline": "A real-time 3D world that runs on the desktop all day",
-    "summary": "A fork of the open-source desktop-pet app super-agent-party, with an entirely new 3D world layered on top. The render pipeline was redesigned around Apple Silicon thermals as a hard ceiling, and I built my own performance, regression and balance harnesses.",
+    "tagline": "Two LLM pets and their real-time 3D world, living on the desktop all day",
+    "summary": "A fork of the open-source desktop-pet app super-agent-party, with an entirely new 3D world layered on top. The render pipeline was redesigned around Apple Silicon thermals as a hard ceiling, and I built my own performance, regression and balance harnesses. Its two pets are LLM-driven — per-pet memory and TTS — and can step out of the world to roam the desktop itself in transparent always-on-top windows.",
     "stats": [
       {
         "value": "432",
@@ -183,6 +183,8 @@
       }
     ],
     "highlights": [
+      "**Two LLM-driven pets with their own memory** — a chick and a puppy chat through a per-pet brain with server-side sessions and TTS, keep daily diaries, cook for each other, and speak up on world events (auroras, rainbows)",
+      "**Desktop companion mode** — the same pets roam the desktop itself in per-pet transparent always-on-top windows with tight hitboxes and per-window chat, sharing one brain with the 3D world",
       "**Render pipeline redesigned under a thermal budget** — removed a post-processing chain (GTAO, bloom) stacking ~19 fullscreen passes per frame, replaced with a single forward pass plus MSAA. Idle-aware frame tiering at 60/30/15fps",
       "**Three self-built verification harnesses** — a headless smoke test with a draw-call ceiling assertion, an fps/CPU probe across idle states, and a Monte Carlo balance simulator running 400 virtual days",
       "**Away-day simulation** — days you never connect are simulated from a date seed and written up as a diary entry from the pet's point of view, then folded into the world log"
