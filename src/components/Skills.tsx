@@ -18,7 +18,7 @@ const groups = [
   },
   {
     key: "domain",
-    items: ["구독 결제 (빌키·정기결제)", "OAuth · 휴대폰 인증", "LLM Function Calling", "OCR · 개인정보 마스킹", "App Store · Play 배포", "보안 감사"],
+    items: [] as string[],
   },
 ];
 
@@ -55,7 +55,7 @@ export default function Skills() {
                 {t(`groups.${group.key}`)}
               </h3>
               <ul className="flex flex-wrap gap-2">
-                {group.items.map((item) => (
+                {(group.key === "domain" ? (t.raw("domainItems") as string[]) : group.items).map((item) => (
                   <li
                     key={item}
                     className="px-3 py-1.5 text-sm rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 bg-white dark:bg-zinc-950"

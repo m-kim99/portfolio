@@ -82,7 +82,15 @@
       "backend": "백엔드 · 데이터",
       "mobile": "모바일 네이티브",
       "domain": "도메인 · 운영"
-    }
+    },
+    "domainItems": [
+      "구독 결제 (빌키·정기결제)",
+      "OAuth · 휴대폰 인증",
+      "LLM Function Calling",
+      "OCR · 개인정보 마스킹",
+      "App Store · Play 배포",
+      "보안 감사"
+    ]
   },
   "projects": {
     "title": "프로젝트",

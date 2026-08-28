@@ -7,7 +7,7 @@ import Disclosure from "./Disclosure";
 const projectMeta = [
   {
     tech: ["React", "TypeScript", "Supabase", "PostgreSQL RLS", "Deno", "Cloudflare R2", "Capacitor"],
-    links: [{ label: "Live", href: "https://traystorageconnect.com" }],
+    links: [{ label: "traystorageconnect.com", href: "https://traystorageconnect.com" }],
   },
   {
     tech: ["Swift", "Objective-C", "Java", "Android SDK", "Supabase", "Kakao / Naver SDK"],

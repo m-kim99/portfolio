@@ -82,7 +82,15 @@
       "backend": "Backend & Data",
       "mobile": "Native mobile",
       "domain": "Domain & Ops"
-    }
+    },
+    "domainItems": [
+      "Subscription billing (recurring payments)",
+      "OAuth & phone verification",
+      "LLM Function Calling",
+      "OCR & PII masking",
+      "App Store & Play deployment",
+      "Security audits"
+    ]
   },
   "projects": {
     "title": "Projects",
