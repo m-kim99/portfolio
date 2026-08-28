@@ -160,8 +160,6 @@ export default function Personal() {
               </span>
             ))}
           </div>
-
-          <p className="mt-6 text-xs text-zinc-500 dark:text-zinc-400">{t("note")}</p>
         </motion.article>
       </div>
     </section>
