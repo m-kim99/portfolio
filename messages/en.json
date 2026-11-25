@@ -18,7 +18,7 @@
     "title": "By the numbers",
     "items": [
       {
-        "value": "785",
+        "value": "1,155",
         "unit": "",
         "label": "commits · Nov 2025 – present"
       },
@@ -28,7 +28,7 @@
         "label": "Codebase"
       },
       {
-        "value": "118",
+        "value": "146",
         "unit": "",
         "label": "Row-level security policies"
       },
@@ -43,7 +43,7 @@
     "title": "About",
     "subtitle": "From planning to engineering",
     "description1": "I joined as a product planner, but with no engineers on staff my specs never got built. Building them myself turned out to be faster, so I did — and after shipping the product I moved into an engineering role.",
-    "description2": "I now own the entire web service and the native apps. Subscription billing, multi-tenant security, native NFC integration and LLM-based document search were all built and debugged in a production environment with real paying customers.",
+    "description2": "I now own the entire web service and the native apps. Subscription billing, multi-tenant security, native NFC integration and LLM-based document search were all built and debugged in live production, with external customer companies signed up.",
     "description3": "There was no engineering process in place, so I introduced one as needed — version control, database migrations, architecture documentation and security audits.",
     "timelineTitle": "Process I introduced",
     "timeline": [
@@ -70,7 +70,7 @@
       {
         "when": "2026.07",
         "what": "Full security audit",
-        "why": "First paying customers"
+        "why": "Protecting external customers' data"
       }
     ]
   },
@@ -102,15 +102,14 @@
         "period": "Nov 2025 – present",
         "summary": "A B2B document management SaaS paired with NFC-tagged physical storage trays. I handled architecture, development, deployment and operations end to end.",
         "highlights": [
-          "Built subscription billing and migrated payment providers twice with no downtime for existing subscribers",
-          "Enforced multi-tenant isolation at the database level (118 row-level security policies)",
-          "Natural-language document search on 18 LLM function-calling tools, migrated away from vector RAG"
+          "Built subscription billing and migrated payment providers twice",
+          "Enforced multi-tenant isolation at the database level (146 row-level security policies)",
+          "Natural-language document search on 20 LLM function-calling tools, migrated away from vector RAG"
         ],
         "details": [
-          "A self-directed security audit surfaced object-storage credentials in the frontend bundle; I moved uploads and downloads onto server-issued presigned URLs. A second pass showed the code fix was neutralised by a manual key rotation that had never happened — I verified that empirically rather than trusting the checklist.",
           "Pricing constants had to be duplicated across the browser and Deno edge runtimes, so I locked them together with a contract test that parses the edge sources and compares them against the client constant. If the values drift, the test fails.",
           "Subscription expiry was enforced in the UI but not in four data-layer functions, so expired subscriptions still passed quota checks. I reproduced each existing definition and added exactly one line to each.",
-          "Five-language localization, including the full terms of service and privacy policy, with revisions that switch over automatically on their effective date.",
+          "Six-language localization — five of them include the full terms of service and privacy policy, with revisions that switch over automatically on their effective date.",
           "Seven classes of personal data (national ID, driver's licence, passport, card, two phone formats, email) are detected by regex in OCR output and masked on the source image."
         ]
       },
