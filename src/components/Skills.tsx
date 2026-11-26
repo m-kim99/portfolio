@@ -6,11 +6,11 @@ import { motion } from "framer-motion";
 const groups = [
   {
     key: "frontend",
-    items: ["React", "TypeScript", "Next.js", "Vite", "Tailwind CSS", "shadcn/ui", "Zustand", "i18next"],
+    items: ["React", "TypeScript", "Next.js", "Vite", "Tailwind CSS", "shadcn/ui", "Zustand", "i18next", "Vitest"],
   },
   {
     key: "backend",
-    items: ["Supabase", "PostgreSQL", "Row Level Security", "Deno Edge Functions", "Prisma", "Cloudflare R2"],
+    items: ["Supabase", "PostgreSQL", "Row Level Security", "Deno Edge Functions", "Prisma", "Cloudflare R2", "GitHub Actions"],
   },
   {
     key: "mobile",

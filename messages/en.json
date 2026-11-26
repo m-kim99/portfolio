@@ -18,7 +18,7 @@
     "title": "By the numbers",
     "items": [
       {
-        "value": "1,155",
+        "value": "1,160",
         "unit": "",
         "label": "commits · Nov 2025 – present"
       },
@@ -44,7 +44,7 @@
     "subtitle": "From planning to engineering",
     "description1": "I joined as a product planner, but with no engineers on staff my specs never got built. Building them myself turned out to be faster, so I did — and after shipping the product I moved into an engineering role.",
     "description2": "I now own the entire web service and the native apps. Subscription billing, multi-tenant security, native NFC integration and LLM-based document search were all built and debugged in live production, with external customer companies signed up.",
-    "description3": "There was no engineering process in place, so I introduced one as needed — version control, database migrations, architecture documentation and security audits.",
+    "description3": "There was no engineering process in place, so I introduced one as needed — version control, database migrations, architecture documentation, security audits, CI gates, backups and failure monitoring.",
     "timelineTitle": "Process I introduced",
     "timeline": [
       {
@@ -71,6 +71,21 @@
         "when": "2026.07",
         "what": "Full security audit",
         "why": "Protecting external customers' data"
+      },
+      {
+        "when": "2026.09",
+        "what": "Postmortems & prevention rules",
+        "why": "A 14-week bug turned out to be wiring, not code"
+      },
+      {
+        "when": "2026.10",
+        "what": "CI security gates, daily backups",
+        "why": "Zero restorable backups; policy and dependency checks were manual"
+      },
+      {
+        "when": "2026.11",
+        "what": "Unattended operations & handover docs",
+        "why": "Failures must be noticed with no engineer on staff"
       }
     ]
   },
@@ -89,7 +104,9 @@
       "LLM Function Calling",
       "OCR & PII masking",
       "App Store & Play deployment",
-      "Security audits"
+      "Security audits",
+      "Monitoring & backups",
+      "CI security gates"
     ]
   },
   "projects": {
@@ -104,13 +121,21 @@
         "highlights": [
           "Built subscription billing and migrated payment providers twice",
           "Enforced multi-tenant isolation at the database level (146 row-level security policies)",
-          "Natural-language document search on 20 LLM function-calling tools, migrated away from vector RAG"
+          "Natural-language document search on 20 LLM function-calling tools, migrated away from vector RAG",
+          "Performance, security and operations pinned down by automated checks — entry-size ratchet, RLS policy linter, exposure harness, restore-verified backups"
         ],
         "details": [
           "Pricing constants had to be duplicated across the browser and Deno edge runtimes, so I locked them together with a contract test that parses the edge sources and compares them against the client constant. If the values drift, the test fails.",
           "Subscription expiry was enforced in the UI but not in four data-layer functions, so expired subscriptions still passed quota checks. I reproduced each existing definition and added exactly one line to each.",
           "Six-language localization — five of them include the full terms of service and privacy policy, with revisions that switch over automatically on their effective date.",
-          "Seven classes of personal data (national ID, driver's licence, passport, card, two phone formats, email) are detected by regex in OCR output and masked on the source image."
+          "Seven classes of personal data (national ID, driver's licence, passport, card, two phone formats, email) are detected by regex in OCR output and masked on the source image.",
+          "Redesigned the AI chatbot from 'search first, then LLM' into an agent loop where search is a tool the model calls when it needs it (router v2). A company aggregate snapshot rides on the last turn, so aggregate questions finish in a single call, and the system prompt stays identical across requests to serve as a cache prefix. Rolling out to internal companies first behind a switch.",
+          "Measured edge-function cold starts (1.0s warm, 7.7s after idle) and removed the variance with a 10-minute warming cron. Confirmed that unauthenticated calls are stopped at the gateway before the function even boots, so the warmer uses the public anon key and runs only to the 401 point — quotas and logs are untouched.",
+          "All four edge functions that call OpenAI now pass a company monthly budget (proportional to plan price) and a platform monthly cap, with token usage × unit price recorded in a ledger. Onboarding suggestions — a new customer's first impression — are never blocked, but are excluded from the totals so one account cannot stall AI for everyone.",
+          "Cut the cold first visit from roughly 7MB to the 1MB range — the background video was 87% of it (deferred load), immutable caching for content-hashed assets, social icons 271KB→19KB, GTM moved after first paint. The entry bundle went from 449K to 313K with dynamic store imports and lazy auth pages, and the login gate from four round trips to one RPC. A ratchet measures entry bytes at the end of every build (warn 330KiB, fail 400KiB) so the regression cannot ship.",
+          "CI runs an RLS policy linter (replays migrations in order and checks only the final policies, catching admin branches that lack a company comparison), a dependency-vulnerability gate that only passes exceptions with a written reason, and a test that fails if a secret reaches the browser bundle. Against the live database I run seven exposure checks for unauthenticated access and a tenant harness that counts other companies' rows from a user's point of view.",
+          "The free plan has no automatic backups, so I built daily backups myself — dump from the same snapshot as a row-count transaction, actually restore into a same-version Postgres container, compare row counts per table, and upload to R2 only when they match. The retention-pruning logic is tested in CI.",
+          "Before handover: an eight-part functional audit (61 candidate defects, 39 verified) and an E2E scenario harness that drives every sidebar tab in a headless browser against an isolated local Supabase stack, fixing defect batches #33–#45. Heartbeats on four scheduled jobs, a public health endpoint, an operations guide for the CEO and a maintenance proposal left the service in a state where failures are noticed without an engineer on staff."
         ]
       },
       {
@@ -141,12 +166,17 @@
         "highlights": [
           "NFC is structurally impossible through a web view alone — it requires a hand-written native bridge",
           "Wrote four custom Capacitor plugins (NFC, push, speech-to-text, downloads)",
-          "All code now owned in-house, removing the dependency on the vendor"
+          "All code now owned in-house, removing the dependency on the vendor",
+          "iOS NFC writes failed for 14 weeks — the cause was an unregistered bridge, not the code; recorded in a postmortem with prevention rules"
         ],
         "details": [
           "On iOS, Core NFC is a native-only API unreachable from WKWebView; on Android, Web NFC is disabled by default inside a WebView. Wrapping the web app was never going to be enough on its own.",
           "Tag detection runs through a three-tier intent filter: tags carrying the service URL (NDEF_DISCOVERED), NDEF-formatted tags (TECH_DISCOVERED), and a catch-all for unformatted tags (TAG_DISCOVERED).",
-          "Configured universal links and app links, and complied with App Store guideline 3.1.1 by hiding payment UI in iOS builds — the replacement copy also avoids naming an external storefront, which 3.1.3 prohibits."
+          "Configured universal links and app links, and complied with App Store guideline 3.1.1 by hiding payment UI in iOS builds — the replacement copy also avoids naming an external storefront, which 3.1.3 prohibits.",
+          "iOS NFC writes failed for 14 weeks. Five rounds of diagnosis dug into the Core NFC session code, but the four plugins had never been registered with the Capacitor 8 bridge, so that code had never run a single line. The decisive raw error ('not implemented') was being replaced by a generic message in a catch block; once it was seen, the fix took half a day. The postmortem set rules: after two ineffective fixes, stop analysing code and prove reachability first; never launder error text; verify the bridge in the simulator, without hardware.",
+          "It also records that seven diagnostic agents run in parallel shared the premise 'the code executes' and confirmed one hypothesis seven times. Diagnosis is now split along the execution chain (call → registration → entry → session), with one role reserved for attacking the shared premises.",
+          "Web bundles ship over the air; releases that change native code raise a minimum-native-version gate alongside, to manage the window where a fresh install's first launch still runs the embedded older bundle.",
+          "Four App Store rejections under guideline 3.1.1 (access to external purchase mechanisms). I reconstructed the reviewer's path from operational logs (two Apple sign-in attempts during review, zero new accounts), compared apps approved after the same wording, and redefined the iOS app as sign-in only — sign-up, invitations and social login removed. The chatbot also avoids pricing and billing when the request comes from iOS."
         ]
       }
     ],
