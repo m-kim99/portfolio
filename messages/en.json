@@ -196,23 +196,23 @@
   "personal": {
     "title": "Personal project",
     "subtitle": "Built outside work hours — real-time 3D and performance engineering",
-    "label": "Personal project · open-source fork",
+    "label": "Personal project · open-source fork → standalone app",
     "period": "Jun 2026 – present",
     "name": "Desktop Pet World",
-    "tagline": "Two LLM pets and their real-time 3D world, living on the desktop all day",
-    "summary": "A fork of the open-source desktop-pet app super-agent-party, with an entirely new 3D world layered on top. The render pipeline was redesigned around Apple Silicon thermals as a hard ceiling, and I built my own performance, regression and balance harnesses. Its two pets are LLM-driven — per-pet memory and TTS — and can step out of the world to roam the desktop itself in transparent always-on-top windows.",
+    "tagline": "Two LLM pets and their real-time 3D world, living on the desktop all day — 2.1.0, first public release ready",
+    "summary": "Started as a fork of the open-source desktop-pet app super-agent-party with an entirely new 3D world layered on top; in November I extracted only the world, the pets and their API into a standalone app (Electron tray + FastAPI) with zero borrowed code. The old app's LLM features were rewritten clean-room as 20 modules, while the render pipeline designed around Apple Silicon thermals and the performance, regression and balance harnesses carry over. The two pets run on the user's own LLM key (BYOK) with per-pet memory and TTS, roam the desktop in transparent always-on-top windows, and operate the Mac on request.",
     "stats": [
       {
-        "value": "432",
-        "label": "commits · 61 days, sole author"
+        "value": "587",
+        "label": "commits · Jun–Nov 2026, sole author"
       },
       {
-        "value": "28,687",
+        "value": "31,706",
         "label": "lines of new world engine"
       },
       {
-        "value": "74,411",
-        "label": "lines of upstream features cut"
+        "value": "20",
+        "label": "LLM feature modules, clean-room rewrite"
       },
       {
         "value": "≤ 250",
@@ -224,7 +224,11 @@
       "**Desktop companion mode** — the same pets roam the desktop itself in per-pet transparent always-on-top windows with tight hitboxes and per-window chat, sharing one brain with the 3D world",
       "**Render pipeline redesigned under a thermal budget** — removed a post-processing chain (GTAO, bloom) stacking ~19 fullscreen passes per frame, replaced with a single forward pass plus MSAA. Idle-aware frame tiering at 60/30/15fps",
       "**Three self-built verification harnesses** — a headless smoke test with a draw-call ceiling assertion, an fps/CPU probe across idle states, and a Monte Carlo balance simulator running 400 virtual days",
-      "**Away-day simulation** — days you never connect are simulated from a date seed and written up as a diary entry from the pet's point of view, then folded into the world log"
+      "**Away-day simulation** — days you never connect are simulated from a date seed and written up as a diary entry from the pet's point of view, then folded into the world log",
+      "**From fork to standalone app** — rather than keep cutting the upstream code that survived five trimming rounds (78 routes, 51 modules), I measured that the world touched borrowed code in only three places (two settings reads, one LLM client) and lifted my own files into a new repository. World engine moved with zero line changes, the 1,612-line server world section with one function swapped, Python dependencies 73 → 9",
+      "**20 LLM features rewritten clean-room** — chat tab (streaming, regenerate, search, export, PDF/Word attachments), vision, keyless web search, recall over conversations and diaries (RAG), provider profiles with per-purpose routing, voice (macOS say TTS, Apple Speech ASR), scheduled behaviors and pet-set reminders, a bond meter, translation, image generation, an OpenAI-compatible /v1. One module per feature; shared code reaches features only through a hook list",
+      "**Computer use — the pet operates the Mac** — a Swift helper (CGEvent, screencapture) and a tool loop that feeds screenshots back as vision. A pet's suggestion starts only when the owner presses ▶ Run, shell commands ask again, dangerous commands are refused after normalisation, and child processes get an environment stripped of keys",
+      "**Release-ready (BYOK, no server) — 2.1.0, first public release** — onboarding, settings-version migrations, personal engravings made configurable (one codebase for the private and public builds), LAN off by default with a token, PyInstaller bundle 181 → 121MB, a macOS/Windows CI matrix with a notarization pipeline, a pre-release security review (all 2 Critical and 6 High fixed), bilingual FAQ and guides"
     ],
     "tech": [
       "three.js",
@@ -232,7 +236,10 @@
       "Python",
       "Blender",
       "Playwright",
-      "Node.js"
+      "Node.js",
+      "FastAPI",
+      "Swift",
+      "PyInstaller"
     ],
     "gallery": [
       {
@@ -258,13 +265,24 @@
       {
         "src": "drive",
         "caption": "Night drive — vehicles move at 3× walking speed; tree colour varies by season"
+      },
+      {
+        "src": "chat-en",
+        "caption": "Chat tab — a direct conversation with the model itself, no persona. Streaming, regenerate, conversation search and export, image/PDF/Word attachments, presets, translation, image generation"
       }
     ],
     "galleryNote": "A few frames from the running app.",
     "details": [
       "**Storage layer hardened after a real incident** — following data loss, the write path was rebuilt around atomic replace (tmp + fsync + rename), generational backups, corruption quarantine and a three-step recovery ladder.",
       "**3D modelling** — both characters modelled in Blender; procedural textures and vertex-colour gradients mean no texture assets ship at all.",
-      "**74,411 lines of upstream features cut** — removed across five deliberate commits after the fork, with a safety tag beforehand and the keep/remove boundary recorded with reasons."
+      "**74,411 lines of upstream features cut** — removed across five deliberate commits after the fork, with a safety tag beforehand and the keep/remove boundary recorded with reasons.",
+      "**Parallel branch development** — four to five feature branches written at once in worktrees, each with its own port band, smoke port and changelog file, meeting shared files only at the hook seam. Every merge conflict was a one-line registration, and all gates passed after the merge (chat 28/28, providers 17/17, vision 19/19, search 22/22, recall 12/12, voice 31/31, misc 45/45, world 15/15).",
+      "**Pre-release security review** — closed two live holes first: loopback was trusted unconditionally with CORS *, so any website open in the browser could read local settings and redirect the key, and the phone relay forwarded LAN requests as if they came from loopback (Host, Sec-Fetch-Site and Origin guards; keys masked and bound to their endpoint). Then SSRF-safe fetch_page (every hop checked after name resolution), Electron fuses, settings at 0600, and zip-slip and zip-bomb limits on backup restore.",
+      "**What a real launch of the packaged app caught** — running it isolated with no node on PATH showed that the headline feature, pets living their day while you are away, depended on a system node and would never have run on a normal user's machine. Added a path where an Electron utilityProcess simulates the last eight days into a cache; the date-seeded determinism means both paths produce the same result, pinned by a smoke test.",
+      "**Player data contract** — with no accounts and no server database, the 'per-user schema' is a folder of JSON files plus browser-storage keys. Each file's owner, write path and backup inclusion are fixed in a table, with a world data version stamp, a migration runner, a key audit and a round-trip smoke test.",
+      "**23 smoke gates** — one per feature, run against a stub model and a sandboxed data folder; the GPU-free groups run in CI (ubuntu, macOS), and the world smoke asserts draw calls ≤ 250. Plus a frozen-bundle boot check and non-macOS platform guards.",
+      "**Pet life, Oct–Nov 2026** — monthly memoirs the two pets co-write about the finished month, time capsules, occasion cards the pets send first, friendship rings kept in the nest, a seventh island, a shared memory of what both pets hear in the room, and a diary-loss root cause (the phone-to-Mac link) traced and closed with daily iCloud backups.",
+      "**3D dishes** — twelve dishes graduated from under the cloche into real 3D models, unified on a single lathe plate part and scaled to real-world size so they sit in one hand. Zero clipping in both pets' hold and eat checks, world smoke 15/15."
     ]
   }
 }
